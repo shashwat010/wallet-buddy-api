@@ -5,21 +5,27 @@ To get started run:
 ```bash
 npm install
 npm run build
-npm run start:dev
+npm run dev
 ```
+
+## Base URL
+```
+http://localhost:{PORT}/api
+```
+
 
 ## Files and Folders
 ---
 
 ### environment/
 
-Complete the necessary parameters for your project. You must fill in the `db` section if using MongoDB. Files will be replaced depending on wether you run `npm run start:dev` or `npm run start:prod`.
+Complete the necessary parameters for your project. You must fill in the `db` section if using MongoDB. Files will be replaced depending on wether you run `npm run dev` or `npm run start:prod`.
 
 ---
 
 ### server.ts
 
-Entry point for NodeJS to run the Express application. Use this file to create an App instance, connect to database and get the app to listn on provided port number. 
+Entry point for NodeJS to run the Express application. Use this file to create an App instance, connect to database and get the app to listen on provided port number. 
 
 ---
 

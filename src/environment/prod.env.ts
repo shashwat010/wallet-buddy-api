@@ -1,5 +1,5 @@
 export = {
-    stage: process.env.ENVIRONMENT,
+    stage: process.env.ENVIRONMENT || 'production' ,
     port:8082,
     domain:"",
     db:{

@@ -2,14 +2,14 @@
   "name": "yts-api",
   "version": "1.0.1",
   "description": "A typescript API using express for YTS apps.",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.ts",
     "build": "tsc",
-    "start:dev": "ENVIRONMENT=dev node ./dist/server.js",
-    "start:prod": "ENVIRONMENT=production node ./dist/server.js",
-    "start": "node dist/server.js"
+    "start:dev": "ENVIRONMENT=dev node ./dist/index.js",
+    "start:prod": "ENVIRONMENT=production node ./dist/index.js",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",

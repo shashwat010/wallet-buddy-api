@@ -1,4 +1,4 @@
-import { env } from "./environment/env";
+import { env } from "./yts.env";
 import { Application } from "express";
 import express = require("express");
 import mongoose = require("mongoose");
@@ -70,6 +70,7 @@ export class App {
                     return process.exit(1);
                 });
         };
+        
         connect();
 
         mongoose.connection.on("disconnected", connect);

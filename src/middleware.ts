@@ -1,5 +1,4 @@
 import bodyParser = require('body-parser');
-
 import { Response, Request, NextFunction } from 'express';
 
 const cors = require('cors');

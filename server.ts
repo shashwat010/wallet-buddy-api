@@ -1,4 +1,4 @@
-import { env } from "./src/environment/env";
+import { env } from "./src/yts.env";
 import { App } from "./src/app";
 import { middleware } from "./src/middleware";
 import { allRoutes } from "./src/routes/routes.module";
@@ -16,7 +16,8 @@ const app = new App(
 try {
   const {user, pw, name, account} = env().db;
   dbConString = env().db.uri(user,pw,name,account);
-} catch {
+} catch(e) {
+  console.log(e);
   console.log("Failed to create DB Connection string");
 }
 

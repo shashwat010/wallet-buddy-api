@@ -4,7 +4,7 @@ import { exampleController } from "../controllers/controllers.module";
 export const routerTemplate = express.Router();
 
 // Set the common part of the path for the routes in this router
-const base = '/host'
+const base = '/example'
 
 routerTemplate.get(`${base}/:id`, (req, res) => { exampleController.findById(res, req.params.id)})
 routerTemplate.get(`${base}`,(req,res)=>{exampleController.find(res)});
