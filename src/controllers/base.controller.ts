@@ -13,13 +13,32 @@ export class BaseController {
         this.model = model;
     }
     
+    private formattedRes = (res:any, message?:string) =>{
+        return {
+            body: res,
+            message: message || 'ok',
+            success: !!res
+        }
+    }
+
     /**
     * Sends the document as JSON in the body of response, and sets status to 200
     * @param doc the MongoDB document to be returned to the client as JSON
     * @param res the response object that will be used to send http response
     */
-    jsonRes(doc: any, res: Response) {
-        res.status(200).json(doc);
+    jsonRes(doc: any, res: Response, message:string = 'Document created successfully') {
+        res.status(200).json(this.formattedRes(doc, message));
+    }
+
+    private formattedErrorRes = (err:mongoose.Error | any):string[] => {
+        try {
+            let retErr:string[] = [];
+            if(err.name === 'ValidationError') retErr = (Object.keys(err.errors) || []).map(val => <string>err.errors[val].message);
+            if(err.code === 11000) retErr = Object.keys(err?.keyValue || []).map(key => `'${err.keyValue[key]}' already exist with us.`);
+            return (retErr.length > 0) ? retErr : [err.message];
+        } catch (error) {
+            return [err.message];
+        }
     }
 
     /**
@@ -30,15 +49,14 @@ export class BaseController {
      */
     errRes(err: any, res: Response, message = 'Sever Error', status = 500) {
         if (env().stage === 'dev') {
-
-            res.status(status).json({ error: message });
+            res.status(status).json({ error: message, success: false, err: err, message: this.formattedErrorRes(err) });
         } else {
             res.status(status).json({ error: message });
         }
     }
 
     /* Creates a new document */
-    create(res: Response, document: any, populate?: IPopulate, errMsg = 'Failed to create') {
+    create(res: Response, document: any, populate?: IPopulate, errMsg = 'Failed to create the document.') {
         this.model.create<mongoose.Document>(document).then((doc: mongoose.Document) => {
             if (populate) {
                 doc.populate(populate).then(populatedDoc => {
