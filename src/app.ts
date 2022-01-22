@@ -83,7 +83,8 @@ export class App {
     }
 
     public listen() {
-        this.app.listen(process.env.PORT || this.port, () => {
+        const PORT = (env().stage === 'dev') ? this.port : process.env.PORT || this.port;
+        this.app.listen(PORT, () => {
             console.log(`[${env().stage}] - Server started at http://localhost:${this.port}${this.apiPath}`);
         });
     }

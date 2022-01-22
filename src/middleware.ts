@@ -18,8 +18,6 @@ const whitelist:string[] = ['https://yoursthatsenior.netlify.app','https://yts-p
 const corsOptions: _cors.CorsOptions = {
     maxAge: 3600,
     origin: (origin, callback):void => {
-        console.log(origin);
-        console.log(env().stage);
         if(env().stage === 'dev') callback(null, true);
         else if (whitelist.includes(<string>origin) || origin?.includes('yoursthatsenior.com')) {
             callback(null, true);
@@ -30,10 +28,6 @@ const corsOptions: _cors.CorsOptions = {
 }
 
 export const middleware = [
-    (req: Request, res: Response, next: NextFunction) => {
-        console.log(req, res);
-        next();
-    },
     bodyParser.json(),
     bodyParser.urlencoded({ extended: true }),
     cors(corsOptions),
