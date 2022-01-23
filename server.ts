@@ -19,8 +19,8 @@ const app = new App(
 
 try {
   // uncomment this one you update the dev.env.ts
-  // const {user, pw, name, account} = env().db;
-  // dbConString = env().db.uri(user,pw,name,account);
+  const {user, pw, name, account} = env().db;
+  dbConString = env().db.uri(user,pw,name,account);
 } catch(e) {
   console.log(e);
   console.log("Failed to create DB Connection string");

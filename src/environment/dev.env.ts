@@ -11,7 +11,8 @@ export = {
         pw: '',
         account: '',
         uri: (user: string, pw :string, name :string, account: string) => {
-            return `mongodb+srv://${user}:${pw}${account}.vsche.mongodb.net/${name}?retryWrites=true&w=majority`;
+            return 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false'
+            // return `mongodb+srv://${user}:${pw}${account}.vsche.mongodb.net/${name}?retryWrites=true&w=majority`;
         }
     }
 }
