@@ -49,7 +49,7 @@ export class AdminController extends BaseController {
 
         const authToken = jwt.sign({admin,valid:true},process.env.JWT_SECRET, { expiresIn: '12h' });
         
-        return this.jsonRes({token:authToken},res,200);
+        return this.jsonRes({token:authToken,ytsToken:true},res,200);
     } catch (error: any) {
         return this.handleHttpError({},res,"Username/Password is invalid",401);
     }

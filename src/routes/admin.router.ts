@@ -15,7 +15,7 @@ routerAdmin.post(`${base}/login`,[
 
 routerAdmin.post(`${base}/signup`,[
     body('username','Username/Password cannot be blank').exists(),
-    body('password','Username/Password cannot be blank').isLength({ min:3 }),
+    body('password','Username/Password cannot be blank').isLength({ min: 2 }),
     body('name','name cannot be blank').exists(),
 ],(req: Request, res: Response) => { adminController.adminSignup(req,res)});
 
