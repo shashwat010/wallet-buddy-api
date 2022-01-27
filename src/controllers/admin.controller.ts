@@ -44,10 +44,10 @@ export class AdminController extends BaseController {
         
         const matchPassword = await bcrypt.compare(password,admin?.password || "");
         if (!admin || !matchPassword) {
-            return this.handleHttpError({matchPassword,admin},res,"Username/Password is invalid",401);
+            return this.handleHttpError({},res,"Username/Password is invalid",401);
         }
 
-        const authToken = jwt.sign({admin,valid:true},process.env.JWT_SECRET, { expiresIn: '12h' });
+        const authToken = jwt.sign({admin,valid:true,role:'admin'},process.env.JWT_SECRET, { expiresIn: '12h' });
         
         return this.jsonRes({token:authToken,ytsToken:true},res,200);
     } catch (error: any) {

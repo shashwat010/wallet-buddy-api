@@ -27,6 +27,14 @@ const Admin: Schema = new Schema({
         required: [true, 'Email is required'],
         validate: [validateEmail, 'Please fill a valid email address'],
     },
+    role : {
+        type: String,
+        required : true,
+        trim : true,
+        lowercase : true,
+        enum : ["admin"],
+        default : "admin"
+    },
     isDeleted: {
          type: Boolean,
          default: false 

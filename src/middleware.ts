@@ -1,10 +1,12 @@
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
+const jwt = require("jsonwebtoken");
 
 import bodyParser = require('body-parser');
 import * as _cors from 'cors';
 
-import { Response, Request, NextFunction } from 'express';
+import { Request , Response, NextFunction } from 'express';
+
 import { env } from './yts.env';
 
 const limiter = rateLimit({
@@ -37,18 +39,53 @@ export const middleware = [
         next();
     },
     (req: Request, res: Response, next: NextFunction) => {
-        res.header("Access-Control-Allow-Origin", '*');
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
+      res.header("Access-Control-Allow-Origin", '*');
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      next();
     },
-    (error:any, req:Request, res:Response, next:NextFunction) => {
-        if (error.type == 'time-out') return res.status(408).json(error)
-        else return res.status(500).json({
-            message: error.message
-        })
-    },
+  (error:any, req:Request, res:Response, next:NextFunction) => {
+      if (error.type == 'time-out') return res.status(408).json(error)
+      else return res.status(500).json({
+          message: error.message
+      })
+    }
 ];
 
 export const options = [
 
 ]
+
+const handleAuthError = (res: Response, err ?: any) =>{
+    return res.status(403).json({
+        error:err,
+        success:false,
+        message: "You are not authenticated, Please login!"
+    })
+}
+
+export const authGuardMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers["authorization"] || req.headers["Authorization"];
+
+  if (!token) return handleAuthError(res);
+  try {
+    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    res.locals.user = decoded;
+  } catch (err) {
+    return handleAuthError(res,err);
+  }
+  return next();
+};
+
+export const adminRoleGuard = (req: Request, res: Response, next: NextFunction) =>{
+  const token = req.headers["authorization"] || req.headers["Authorization"];
+    
+  if (!token) return handleAuthError(res)
+  try {
+    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    res.locals.user = decoded;
+    if(decoded?.role !== 'admin') return handleAuthError(res);
+  } catch (err) {
+    return handleAuthError(res,err);
+  }
+  return next();
+} 
