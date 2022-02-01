@@ -6,6 +6,7 @@ import bodyParser = require('body-parser');
 import * as _cors from 'cors';
 
 import { Request , Response, NextFunction } from 'express';
+import { Result, ValidationError, validationResult } from 'express-validator';
 
 import { env } from './yts.env';
 
@@ -89,3 +90,20 @@ export const adminRoleGuard = (req: Request, res: Response, next: NextFunction) 
   }
   return next();
 } 
+
+  
+export const handleValidationError = (req:Request, res:Response, next: NextFunction)=>{
+  const errors:Result<ValidationError> = validationResult(req);
+  let _errors:string[] = errors.array().map(err => err.msg)
+  _errors = _errors.filter(function(item, pos) {
+    return _errors.indexOf(item) == pos;
+  })
+
+  if(_errors.length > 0) return res.status(400).json({
+    error: _errors,
+    success: false,
+    message: _errors
+  })
+
+  next();
+}

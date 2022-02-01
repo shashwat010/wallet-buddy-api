@@ -3,5 +3,9 @@
  */
 
 import { AdminController } from './admin.controller';
+import { UserController } from './user.controller';
+import { OrderController } from './order.controller';
 
 export const adminController = new AdminController();
+export const userController = new UserController();
+export const orderController = new OrderController();
