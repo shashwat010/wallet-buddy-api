@@ -1,18 +1,18 @@
 export = {
     stage: process.env.ENVIRONMENT || 'dev',
-    port:8082,
+    port: 8082,
     domain:'',
-    apiPath: '',
+    apiPath: '/api',
     staticPath: '',
     db:{
-        name: 'yts-dev',
-        user:'sachinduhan',
-        pw: 'Yoursthatsenior21',
-        account: '@yts-dev',
+        // add localhost mongodb details.
+        name: '',
+        user:'',
+        pw: '',
+        account: '',
         uri: (user: string, pw :string, name :string, account: string) => {
-            return `mongodb+srv://${user}:${pw}${account}.vsche.mongodb.net/${name}?retryWrites=true&w=majority`;
+            return 'mongodb://localhost:27017/YTS-Admin?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false'
+            // return `mongodb+srv://${user}:${pw}${account}.vsche.mongodb.net/${name}?retryWrites=true&w=majority`;
         }
     }
 }
-
-

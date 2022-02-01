@@ -16,11 +16,13 @@ export class App {
     constructor(
         private port: number,
         middleware: Array<any>,
+        options: Array<any>,
         routes: Array<express.Router>,
         private apiPath: string = env().apiPath ? env().apiPath : '/api',
         private staticPath: string = env().staticPath ? env().staticPath :"public"
     ) {
         this.app = express();
+        this.options(options);
         this.middleware(middleware);
         this.routes(routes);
         this.assets(this.staticPath);
@@ -33,6 +35,10 @@ export class App {
         _middleware.forEach((m) => {
             this.app.use(m);
         });
+    }
+
+    private options(_options:any[]){
+        _options.forEach(op => this.app.options(op));
     }
 
     public addMiddleWare(middleWare: any) {
@@ -77,8 +83,9 @@ export class App {
     }
 
     public listen() {
-        this.app.listen(this.port, () => {
-            console.log(`Server started at http://localhost:${this.port}`);
+        const PORT = (env().stage === 'dev') ? this.port : process.env.PORT || this.port;
+        this.app.listen(PORT, () => {
+            console.log(`[${env().stage}] - Server started at http://localhost:${this.port}${this.apiPath}`);
         });
     }
 }
