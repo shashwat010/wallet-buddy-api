@@ -11,16 +11,18 @@ export class AdminController extends BaseController {
   constructor() {
     super(new AdminModel());
   }
-
-  public async adminSignup(req: Request, res: Response) {
-    const errors:Result<ValidationError> = validationResult(req);
-    if (!errors.isEmpty()) {
-        let _errors:string[] = errors.array().map(err => err.msg)
+  
+  handleValidationError=(res: Response,errors:Result<ValidationError>)=>{
+    let _errors:string[] = errors.array().map(err => err.msg)
         _errors = _errors.filter(function(item, pos) {
             return _errors.indexOf(item) == pos;
         })
-        return this.handleHttpError(errors,res,_errors,401);
-    }
+    return this.handleHttpError(errors,res,_errors,401);
+  }
+
+  public async adminSignup(req: Request, res: Response) {
+    const errors:Result<ValidationError> = validationResult(req);
+    if (!errors.isEmpty()) return this.handleValidationError(res,errors);
 
     const salt = bcrypt.genSaltSync(10);
     const securePass = await bcrypt.hash(req.body.password, salt);
@@ -28,15 +30,10 @@ export class AdminController extends BaseController {
     return this.create(res, req.body);
   }
 
+
   public async adminLogin(req: Request, res: Response) {
     const errors:Result<ValidationError> = validationResult(req);
-    if (!errors.isEmpty()) {
-        let _errors:string[] = errors.array().map(err => err.msg)
-        _errors = _errors.filter(function(item, pos) {
-            return _errors.indexOf(item) == pos;
-        })
-        return this.handleHttpError(errors,res,_errors,401);
-    }
+    if (!errors.isEmpty()) return this.handleValidationError(res,errors);
 
     const { username, password } = req.body;
     try {
@@ -47,6 +44,7 @@ export class AdminController extends BaseController {
             return this.handleHttpError({},res,"Username/Password is invalid",401);
         }
 
+        if(admin?.password)  admin.password=undefined;
         const authToken = jwt.sign({admin,valid:true,role:'admin'},process.env.JWT_SECRET, { expiresIn: '12h' });
         
         return this.jsonRes({token:authToken,ytsToken:true},res,200);

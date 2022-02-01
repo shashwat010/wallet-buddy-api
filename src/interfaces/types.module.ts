@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 
 export interface AdminBase{
     username:string,
-    password:string,
+    password?:string,
     name:string,
     email:string,
     isDeleted:boolean,
