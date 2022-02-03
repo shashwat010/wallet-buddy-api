@@ -91,6 +91,20 @@ export const adminRoleGuard = (req: Request, res: Response, next: NextFunction) 
   return next();
 } 
 
+export const userRoleGuard = (req: Request, res: Response, next: NextFunction) =>{
+  const token = req.headers["authorization"] || req.headers["Authorization"];
+    
+  if (!token) return handleAuthError(res)
+  try {
+    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    res.locals.user = decoded;
+    if(decoded?.role !== 'user') return handleAuthError(res);
+  } catch (err) {
+    return handleAuthError(res,err);
+  }
+  return next();
+} 
+
   
 export const handleValidationError = (req:Request, res:Response, next: NextFunction)=>{
   const errors:Result<ValidationError> = validationResult(req);

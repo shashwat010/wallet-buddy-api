@@ -14,7 +14,7 @@ const base = '/user'
  * use middleware to send otp | non-blocking | don't wait for the response from msg91.
  * then save user in the db.
 */
-userRouter.post(`${base}/register`, [], handleValidationError, (req: Request, res: Response) => { userController.userRegistration()})
+userRouter.post(`${base}/register`, [], handleValidationError, (req: Request, res: Response) => { userController.userRegistration(req,res)})
 
 userRouter.post(`${base}/otp/resend`,[],handleValidationError, ()=>{});
 

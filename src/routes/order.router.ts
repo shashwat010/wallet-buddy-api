@@ -2,7 +2,7 @@ import express = require('express');
 import { orderController } from '../controllers/controllers.module';
 import { body } from 'express-validator';
 import { Response, Request } from "express";
-import { adminRoleGuard, handleValidationError } from '../middleware';
+import { adminRoleGuard, handleValidationError, userRoleGuard } from '../middleware';
 
 export const orderRouter = express.Router();
 
@@ -14,7 +14,7 @@ const base = '/order'
  * check if user order exist, if exist update existing order
  * return razorpay_orderId
 */
-orderRouter.post(`${base}/'new'`, [], handleValidationError, (req: Request, res: Response) => {})
+orderRouter.post(`${base}/new`, [], userRoleGuard,handleValidationError, (req: Request, res: Response) => {orderController.createOrder(req,res)})
 
 orderRouter.get(`${base}`, adminRoleGuard, (req:Request,res:Response)=> orderController.find(res));
 orderRouter.get(`${base}/:id`, adminRoleGuard, (req:Request,res:Response)=> orderController.findOne(res,{_id : req.params.id}));

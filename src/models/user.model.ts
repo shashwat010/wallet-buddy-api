@@ -32,8 +32,7 @@ const AddressSchema: Schema = new Schema({
 const User: Schema = new Schema({
     password:{
         type: String,
-        required: false,
-        default: 'no_password'
+        required: [true,'Password is required'],
     },
     name:{ // both first and last name
         type: String,
@@ -55,6 +54,10 @@ const User: Schema = new Schema({
         lowercase: true,
         minlength: [10, 'Phone number should be at least 10 digits long'],
         validate:[validatePhoneNumber,'Please, provide a valid phone number']
+    },
+    role:{
+        type: String,
+        default:"user"
     },
     status:{
         emailVerified:{
@@ -90,6 +93,11 @@ const User: Schema = new Schema({
         type: String,
         required: false,
         default:'N/A',
+    },
+    dob:{
+        type:Date,
+        default: 1643920207189,
+        required: true
     },
     isDeleted: {
          type: Boolean,
