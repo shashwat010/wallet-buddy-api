@@ -14,7 +14,7 @@ const base = '/order'
  * check if user order exist, if exist update existing order
  * return razorpay_orderId
 */
-orderRouter.post(`${base}/new`, [], userRoleGuard,handleValidationError, (req: Request, res: Response) => {orderController.createOrder(req,res)})
+orderRouter.post(`${base}/new`, [], userRoleGuard, handleValidationError, (req: Request, res: Response) => orderController.createOrder(req,res))
 
 orderRouter.get(`${base}`, adminRoleGuard, (req:Request,res:Response)=> orderController.find(res));
 orderRouter.get(`${base}/:id`, adminRoleGuard, (req:Request,res:Response)=> orderController.findOne(res,{_id : req.params.id}));

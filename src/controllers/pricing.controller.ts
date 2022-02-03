@@ -27,4 +27,6 @@ export class PricingController extends BaseController {
         if(dbCouponVal) return this.jsonRes({coupon: dbCouponVal, valid: true}, res, 200);
         return this.errRes({valid: false, coupon: null},res, "The coupon code entered is invalid", 403);
     }
+
+    
 }
