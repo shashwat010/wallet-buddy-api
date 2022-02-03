@@ -2,7 +2,7 @@ import mongoose = require("mongoose");
 import { BaseController } from "./base.controller";
 import { Response, Request } from "express";
 import { OrderModel } from "../models/order.model";
-import { razorpayInstance } from "../Razorpay/razorCredentials";
+import { razorpayInstance } from "../service/payment.service";
 
 export class OrderController extends BaseController {
   constructor() {
@@ -17,6 +17,6 @@ export class OrderController extends BaseController {
         else
           this.handleHttpError(err,res,"Invalid login",401);
       }
-  )
+    )
   }
 }
