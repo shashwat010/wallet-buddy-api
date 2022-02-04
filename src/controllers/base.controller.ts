@@ -55,7 +55,7 @@ export class BaseController {
      * @param res response object to be used to to send 
      * @param status custom status code, defaults to 500
      */    
-    public errRes(err: any, res: Response, message = 'Sever Error', status = 500) {
+    public errRes(err: any, res: Response, message = 'Server Error', status = 500) {
         return res.status(status).json({ error: message, success: false, err: err, message: this.formattedErrorRes(err) });
     }
 

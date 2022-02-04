@@ -44,6 +44,14 @@ export interface AdminBase{
     role: string
 }
 
+export interface Pricing{
+    basePrice: number,
+    course_name: string,
+    coupon?: string,
+    discount: number,
+    couponApplied: boolean
+}
+
 interface MongooseDoc{
     _id:string,
     createdAt:Date,

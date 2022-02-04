@@ -1,5 +1,10 @@
 export const discountCoupons = [
     {
+        id: 0,
+        name: 'YTS05',
+        value: 5,
+    },
+    {
         id: 1,
         name: 'YTS10',
         value: 10,

@@ -103,8 +103,7 @@ export const userRoleGuard = (req: Request, res: Response, next: NextFunction) =
     return handleAuthError(res,err);
   }
   return next();
-} 
-
+}
   
 export const handleValidationError = (req:Request, res:Response, next: NextFunction)=>{
   const errors:Result<ValidationError> = validationResult(req);

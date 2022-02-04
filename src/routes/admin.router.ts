@@ -19,4 +19,4 @@ routerAdmin.post(`${base}/signup`,adminRoleGuard,[
     body('name','name cannot be blank').exists(),
 ],(req: Request, res: Response) => { adminController.adminSignup(req,res)});
 
-routerAdmin.get(`${base}/authToken`,authGuardMiddleware,(req: Request,res: Response) => {});
+routerAdmin.get(`${base}/authToken`,authGuardMiddleware,(req: Request,res: Response) => { adminController.verifyToken(req,res)});

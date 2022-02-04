@@ -30,7 +30,6 @@ export class AdminController extends BaseController {
     return this.create(res, req.body);
   }
 
-
   public async adminLogin(req: Request, res: Response) {
     const errors:Result<ValidationError> = validationResult(req);
     if (!errors.isEmpty()) return this.handleValidationError(res,errors);
@@ -51,5 +50,9 @@ export class AdminController extends BaseController {
     } catch (error: any) {
         return this.handleHttpError({},res,"Username/Password is invalid",401);
     }
+  }
+
+  public verifyToken(req: Request, res: Response){
+    return this.jsonRes({},res,200);
   }
 }
