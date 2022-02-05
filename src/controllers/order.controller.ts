@@ -58,7 +58,7 @@ export class OrderController extends BaseController {
               productName: notes.course,
               razorpayOrderId: razozpayOrderRes.id,
               razorpayResponse: razozpayOrderRes,
-              amount: amount/100, // amount in our db in rupees
+              amount: amount/100, // amount in our db in rupee
               discount:{
                 code: notes.coupon_code,
                 value: notes.coupon_value,

@@ -15,9 +15,10 @@ export class PricingController extends BaseController {
                 basePrice: COURSE_BASE_PRICE.ONLINE_SOFT_SKILLS_COURSE.basePriceInRupee,
                 course_name,
                 discount: dbCouponVal?.value || COURSE_BASE_PRICE.ONLINE_SOFT_SKILLS_COURSE.minDiscount,
+                discountedPrice : COURSE_BASE_PRICE.ONLINE_SOFT_SKILLS_COURSE.basePriceInRupee *(100 - (dbCouponVal?.value || COURSE_BASE_PRICE.ONLINE_SOFT_SKILLS_COURSE.minDiscount))/100,
                 couponApplied: !!dbCouponVal
             };
-            return this.jsonRes(pricing, res, 200,'YTS coupon code applied successfully');
+            return this.jsonRes(pricing, res, 200,pricing.couponApplied?'YTS coupon code applied successfully':'YTS coupon code is invalid. Enjoy our 5% offer.');
         }
         return this.errRes({},res,"Invalid course name", 404);
     }    

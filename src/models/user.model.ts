@@ -3,31 +3,6 @@ import { Schema } from "mongoose";
 import { BaseModel } from "./base.model";
 import { validateEmail, validatePhoneNumber } from '../util/constants';
 
-const AddressSchema: Schema = new Schema({
-    line1:{
-        type: String,
-        trim: true,
-        required: false,
-        lowercase: true,
-        default: 'no address',
-    },
-    line2:{
-        type: String,
-        required: false,
-        trim: true,
-        default:'',
-    },
-    state:{
-        type: String,
-        required: false,
-        default: 'delhi',
-    },
-    pincode:{
-        type: Number,
-        required: false,
-        default: -1,
-    }
-});
 
 const User: Schema = new Schema({
     password:{
@@ -77,7 +52,31 @@ const User: Schema = new Schema({
             default: false,
         }
     },
-    address: AddressSchema,
+    address: {
+        line1:{
+            type: String,
+            trim: true,
+            required: false,
+            lowercase: true,
+            default: 'no address',
+        },
+        line2:{
+            type: String,
+            required: false,
+            trim: true,
+            default:'',
+        },
+        state:{
+            type: String,
+            required: false,
+            default: 'delhi',
+        },
+        pincode:{
+            type: Number,
+            required: false,
+            default: -1,
+        }
+    },
     workingStatus:{
         type: String,
         enum:['job','student'],
