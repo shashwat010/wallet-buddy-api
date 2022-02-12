@@ -11,7 +11,7 @@ const base = '/user'
 
 userRouter.post(`${base}/register`, [], handleValidationError, (req: Request, res: Response) => { userController.userRegistration(req,res)})
 userRouter.post(`${base}/login`, [], handleValidationError, (req: Request, res: Response) => { userController.userLogin(req,res)})
-userRouter.put(`${base}/update/:id`,userRoleGuard, (req:Request, res:Response) => userController.updateById(res, req.params.id, req.body));
+userRouter.put(`${base}/update/:id`,userRoleGuard, (req:Request, res:Response) => {userController.updateDetails(req,res,req.params.id)})
 
 // userRouter.post(`${base}/otp/resend`,[],handleValidationError, ()=>{});
 

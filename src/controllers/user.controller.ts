@@ -43,5 +43,15 @@ export class UserController extends BaseController {
     }
   }
 
-  
+  public async updateDetails(req: Request, res: Response,id: string){
+    try{
+      let user = await this.model.updateById<UserDoc>(id,req.body);
+      
+      user.password=undefined;
+      const authToken = jwt.sign({user,role:'user'},process.env.JWT_SECRET, { expiresIn: '12h' });
+      return this.jsonRes({token:authToken,ytsToken:true},res,200);
+    } catch(err){
+      this.errRes(err,res,"Invalid document id");
+    } 
+  }
 }
