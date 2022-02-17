@@ -32,12 +32,12 @@ export class UserController extends BaseController {
       let user = await this.model.findOne<UserDoc>({email:email,isDeleted: false});  
 
       const matchPassword = await bcrypt.compare(password,user?.password || "");
-        if (!user || !matchPassword) {
-            return this.handleHttpError({},res,"Email/Password is invalid",401);
-        }
+      if (!user || !matchPassword) {
+        return this.handleHttpError({},res,"Email/Password is invalid", 401);
+      }
 
-      const authToken = jwt.sign({user,role:'user'},process.env.JWT_SECRET, { expiresIn: '12h' });
-      return this.jsonRes({token:authToken,ytsToken:true},res,200);
+      const authToken = jwt.sign({user,role:'user'}, process.env.JWT_SECRET, { expiresIn: '12h' });
+      return this.jsonRes({token:authToken,ytsToken:true}, res, 200);
     } catch(err){
       this.errRes(err,res);
     }
@@ -48,8 +48,8 @@ export class UserController extends BaseController {
       let user = await this.model.updateById<UserDoc>(id,req.body);
       
       user.password=undefined;
-      const authToken = jwt.sign({user,role:'user'},process.env.JWT_SECRET, { expiresIn: '12h' });
-      return this.jsonRes({token:authToken,ytsToken:true},res,200);
+      const authToken = jwt.sign({user, role:'user'}, process.env.JWT_SECRET, { expiresIn: '12h' });
+      return this.jsonRes({token: authToken, ytsToken: true}, res, 200);
     } catch(err){
       this.errRes(err,res,"Invalid document id");
     } 

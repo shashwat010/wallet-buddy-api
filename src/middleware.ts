@@ -58,9 +58,9 @@ export const options = [
 
 const handleAuthError = (res: Response, err ?: any) =>{
     return res.status(403).json({
-        error:err,
-        success:false,
-        message: "You are not authenticated, Please login!"
+        error: err,
+        success: false,
+        message: "You are not Authorized, Please login!"
     })
 }
 
@@ -96,7 +96,7 @@ export const userRoleGuard = (req: Request, res: Response, next: NextFunction) =
     
   if (!token) return handleAuthError(res)
   try {
-    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     res.locals.user = decoded;
     if(decoded?.role !== 'user') return handleAuthError(res);
   } catch (err) {
