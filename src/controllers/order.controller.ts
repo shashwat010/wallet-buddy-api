@@ -66,7 +66,7 @@ export class OrderController extends BaseController {
             }
           }
           const created_order = await this.model.create<OrderDoc>(yts_order);
-          return this.jsonRes({order_id: razorpayOrderRes.id, amount: created_order.amount, discount: created_order.discount},res,201);
+          return this.jsonRes({order_id: razorpayOrderRes.id, amount: created_order.amount, discount: created_order.discount, rzpId: process.env.RAZORPAY_ID},res,201);
         }
         return this.handleHttpError(err,res,"Invalid login",401);
       })
