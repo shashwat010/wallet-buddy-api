@@ -5,3 +5,8 @@ export interface IPopulate {
     model?: string;
     populate?: IPopulate;
 } 
+
+export interface IFindPaginationQuery{
+    page_size?: number,
+    page_number?:number
+}
