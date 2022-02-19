@@ -48,30 +48,29 @@ export class OrderController extends BaseController {
         "course": calPrice.price.course_name,
         "coupon_code": calPrice.price.coupon,
         "coupon_value": calPrice.price.discount,
-        "reffered_by": req.body?.givenBy || 'admin'
+        "referred_by": req.body?.givenBy || 'admin'
       }
 
-      razorpayInstance.orders.create({amount, currency:"INR", receipt, notes},async (err:any, razozpayOrderRes:any)=>{ 
-          if(!err){
-            const yts_order = {
-              user: user._id,
-              productName: notes.course,
-              razorpayOrderId: razozpayOrderRes.id,
-              razorpayResponse: razozpayOrderRes,
-              amount: amount/100, // amount in our db in rupee
-              discount:{
-                code: notes.coupon_code,
-                value: notes.coupon_value,
-                givenBy: notes.reffered_by
-              }
+      razorpayInstance.orders.create({amount, currency:"INR", receipt, notes},async (err:any, razorpayOrderRes:any)=>{ 
+        if(!err){
+          const yts_order = {
+            user: user._id,
+            productName: notes.course,
+            razorpayOrderId: razorpayOrderRes.id,
+            razorpayResponse: razorpayOrderRes,
+            amount: amount/100, // amount in our db in rupee
+            discount:{
+              code: notes.coupon_code,
+              value: notes.coupon_value,
+              givenBy: notes.referred_by
             }
-            const created_order = await this.model.create<OrderDoc>(yts_order);
-            return this.jsonRes({order_id: razozpayOrderRes.id, amount: created_order.amount, discount: created_order.discount},res,201);
           }
-          return this.handleHttpError(err,res,"Invalid login",401);
+          const created_order = await this.model.create<OrderDoc>(yts_order);
+          return this.jsonRes({order_id: razorpayOrderRes.id, amount: created_order.amount, discount: created_order.discount},res,201);
         }
-      )
-    } catch(err) {  
+        return this.handleHttpError(err,res,"Invalid login",401);
+      })
+    } catch(err) {
       return this.errRes(err,res,"Internal Server Error",500);
     }
   }
