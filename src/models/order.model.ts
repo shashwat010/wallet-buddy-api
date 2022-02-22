@@ -19,11 +19,11 @@ const Order: Schema = new Schema({
         type: String,
         required: true,
     },
-    razorpayResponse: [{
+    razorpayResponse: {
         type: Object,
         required: false,
         default: null,
-    }],
+    },
     amount:{ // in paisa
         type: Number,
         required: true,

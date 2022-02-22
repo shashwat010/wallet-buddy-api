@@ -2,7 +2,7 @@ import { Response } from 'express'
 import mongoose = require('mongoose')
 import { env } from '../yts.env';
 import { IModel } from '../interfaces/IModel';
-import { IPopulate } from '../interfaces/yts.types';
+import { IFindPaginationQuery, IPopulate } from '../interfaces/yts.types';
 import { BaseModel } from '../models/base.model';
 
 /* Provides functions to be used with express routes. Serves common CRUD functionality. */
@@ -75,6 +75,21 @@ export class BaseController {
     /* Returns all documents of model*/
     find(res: Response, populate?: IPopulate, errMsg = 'Failed to find documents') {
         this.model.find(populate).then(doc => { return this.jsonRes(doc, res) }, err => this.errRes(err, res, errMsg) );
+    }
+
+    /**returns the paginated document. */
+    paginatedFind(res:Response, query:any = {}, paginationQuery?: IFindPaginationQuery, populate?:IPopulate){
+        const page_size = paginationQuery?.page_size || 20, page_number = paginationQuery?.page_number || 1;
+        return populate ? 
+            this.model.mongooseModel.find(query)
+            .limit(page_size).skip((page_number - 1)*page_size).populate(populate).exec()
+            .then(doc => this.jsonRes(doc, res))
+            .catch(err => this.errRes(err,res,'Failed to find the document.'))
+        : 
+            this.model.mongooseModel.find(query)
+            .limit(page_size).skip((page_number - 1)*page_size).exec()
+            .then(doc => this.jsonRes(doc, res))
+            .catch(err => this.errRes(err,res,'Failed to find the document.'));
     }
 
     /* Returns single document of model specified by _id. */
