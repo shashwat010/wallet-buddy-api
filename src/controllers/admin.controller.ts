@@ -35,11 +35,11 @@ export class AdminController extends BaseController {
     if (!errors.isEmpty()) return this.handleValidationError(res,errors);
 
     const { username, password } = req.body;
+    
     try {
         let admin = await this.model.findOne<AdminDoc>({username:username,isDeleted:false});
-        
         const matchPassword = await bcrypt.compare(password,admin?.password || "");
-        if (!admin || !matchPassword) {
+        if (!admin || !matchPassword || admin.username!==username) {
             return this.handleHttpError({},res,"Username/Password is invalid",401);
         }
 
