@@ -32,8 +32,6 @@ export class TransactionController extends BaseController {
 
   public async retrieveTransaction(req: Request, res: Response) {
       try{
-
-        // const retrievedTransaction= await this.findOne<TransactionModel>(res,{_id:res.locals.user.id});  
         let retrievedTransaction = await this.model.findMany<TransactionDoc>({user:res.locals.id});
         return this.jsonRes(retrievedTransaction,res,200);
       }

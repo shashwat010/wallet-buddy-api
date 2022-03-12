@@ -1,7 +1,7 @@
 {
-  "name": "yts-api",
+  "name": "wallet-buddy-api",
   "version": "1.0.1",
-  "description": "A typescript API using express for YTS apps.",
+  "description": "A typescript API using express for wallet-buddy-api",
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,19 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yoursthatsenior/yts-api.git"
+    "url": "git+https://github.com/shashwat010/wallet-buddy-api.git"
   },
   "keywords": [
     "Typescript",
     "ExpressJs",
     "NodeJs"
   ],
-  "author": "Sachin duhan",
+  "author": "Shashwat Jain",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yoursthatsenior/yts-api/issues"
+    "url": "https://github.com/shashwat010/wallet-buddy-api/issues"
   },
-  "homepage": "https://github.com/yoursthatsenior/yts-api#readme",
+  "homepage": "https://github.com/shashwat010/wallet-buddy-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",

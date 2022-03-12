@@ -13,5 +13,4 @@ export const env: () => IEnv = () => {
     console.log(`Error. shell variable ENVIRONMENT not set. Acceptable values are 'dev' | 'production'`);
     exit(1);
   }
-
 };
