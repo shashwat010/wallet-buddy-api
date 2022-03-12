@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { StorageEngine } from "multer";
 
 export interface UserBase{
     password?: string,
@@ -23,33 +24,20 @@ export interface UserBase{
     isDeleted: boolean
 
 }
-export interface OrderBase{
-    user: string,
-    productName: string,
-    razorpayOrderId: string,
-    razorpayResponse: object,
-    amount: number,
-    discount:{
-        givenBy: string,
-        code: string,
-        value: number
-    }
-}
 export interface AdminBase{
     username:string,
     password?:string,
     name:string,
     email:string,
     isDeleted:boolean,
-    role: string
 }
 
-export interface Pricing{
-    basePrice: number,
-    course_name: string,
-    coupon?: string,
-    discount: number,
-    couponApplied: boolean
+interface TransactionBase{
+    user:string,
+    type:string,
+    category:string,
+    amount:number,
+    date:string
 }
 
 interface MongooseDoc{
@@ -58,8 +46,9 @@ interface MongooseDoc{
     updatedAt:Date,
 }
 
+
 export interface AdminDoc extends MongooseDoc,AdminBase {}
 
-export interface UserDoc extends MongooseDoc,UserBase {}
+export interface TransactionDoc extends MongooseDoc,TransactionBase {}
 
-export interface OrderDoc extends MongooseDoc, OrderBase {}
+export interface UserDoc extends MongooseDoc,UserBase {}

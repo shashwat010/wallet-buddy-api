@@ -1,8 +1,6 @@
 import { baseRouter } from "./base.router";
 import { routerAdmin } from "./admin.router";
-import { userRouter } from "./user.router";
-import { orderRouter } from "./order.router";
-import { pricingRouter } from "./pricing.router";
+import { routerTransaction } from "./transaction.router";
 
 //* Add your express router objects here
-export const allRoutes = [baseRouter,routerAdmin,userRouter,orderRouter, pricingRouter];
+export const allRoutes = [baseRouter,routerAdmin,routerTransaction];

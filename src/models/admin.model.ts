@@ -1,7 +1,7 @@
 import mongoose = require('mongoose')
 import { Schema } from "mongoose";
 import { BaseModel } from "./base.model";
-import { validateEmail } from '../util/constants';
+import { validateEmail, validatePhoneNumber } from '../util/constants';
 
 const Admin: Schema = new Schema({
     username: {
@@ -27,13 +27,13 @@ const Admin: Schema = new Schema({
         required: [true, 'Email is required'],
         validate: [validateEmail, 'Please fill a valid email address'],
     },
-    role : {
+    phone:{
         type: String,
-        required : true,
-        trim : true,
-        lowercase : true,
-        enum : ["admin"],
-        default : "admin"
+        required: [true, 'Phone number is mandatory'],
+        unique: true,
+        lowercase: true,
+        minlength: [10, 'Phone number should be at least 10 digits long'],
+        validate:[validatePhoneNumber,'Please, provide a valid phone number']
     },
     isDeleted: {
          type: Boolean,

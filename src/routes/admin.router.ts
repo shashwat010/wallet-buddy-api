@@ -13,7 +13,7 @@ routerAdmin.post(`${base}/login`,[
     body('password','Username/Password is invalid').exists(),
 ], (req: Request, res: Response) => { adminController.adminLogin(req,res)})
 
-routerAdmin.post(`${base}/signup`,adminRoleGuard,[
+routerAdmin.post(`${base}/signup`,[
     body('username','Username/Password cannot be blank').exists(),
     body('password','Username/Password cannot be blank').isLength({ min: 2 }),
     body('name','name cannot be blank').exists(),

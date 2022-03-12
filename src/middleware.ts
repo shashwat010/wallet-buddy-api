@@ -71,6 +71,7 @@ export const authGuardMiddleware = (req: Request, res: Response, next: NextFunct
   try {
     const decoded = jwt.verify(token,process.env.JWT_SECRET);
     res.locals.user = decoded;
+    
   } catch (err) {
     return handleAuthError(res,err);
   }
